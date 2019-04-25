@@ -1,7 +1,9 @@
 obj
 *.swp
-os.iso
+*.iso
+*.img
 *.o
 *.d
 *.a
 *.dep
+*.bin
