@@ -18,7 +18,6 @@ extern kmain ; from our sources
 
 
 start:
-	cli ; block interupt
 	mov esp, stack_space ; set stack ptr
 	call kmain 
 	hlt ; halt the cpu

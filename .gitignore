@@ -1,0 +1,7 @@
+obj
+*.swp
+os.iso
+*.o
+*.d
+*.a
+*.dep
