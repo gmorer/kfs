@@ -8,14 +8,14 @@ CFLAGS := \
 	--emit=obj,dep-info \
 	-Copt-level=3 \
 	--target=i686-unknown-linux-gnu \
-	--crate-type lib 
+	--crate-type staticlib 
 
 MKRESCUE := $(shell which grub2-mkrescue 2>&- && echo grub2-mkrescue || echo grub-mkrescue)
 
 OBJS = \
 	loader.o \
-	test.o \
-	module.o
+	kmain.o \
+	vga_buffer.o
 
 SRC_PATH := src
 OBJ_PATH := obj
