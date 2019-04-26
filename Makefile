@@ -1,6 +1,7 @@
 NAME := kernel.bin
 TARGET_PATH = rom/boot
 TARGET = $(TARGET_PATH)/$(NAME)
+MKRESCUE := $(shell which grub2-mkrescue 2>&- && echo grub2-mkrescue || echo grub-mkrescue)
 CC := rustc
 ASM := nasm
 ASM_FLAGS := -f elf32
@@ -8,24 +9,21 @@ CFLAGS := \
 	--emit=obj,dep-info \
 	-Copt-level=3 \
 	--target=i686-unknown-linux-gnu \
+	-Cpanic=abort \
 	--crate-type staticlib 
-
-MKRESCUE := $(shell which grub2-mkrescue 2>&- && echo grub2-mkrescue || echo grub-mkrescue)
-
 OBJS = \
 	loader.o \
 	kmain.o \
 	vga_buffer.o
-
 SRC_PATH := src
 OBJ_PATH := obj
+ALL_OBJS :=$(addprefix $(OBJ_PATH)/, $(OBJS))
 LINKER := ld
 LINKER_CONF := linker.ld
 LINKER_FLAGS := -m elf_i386 --nmagic -T $(LINKER_CONF)
 
 all: iso
 
-ALL_OBJS :=$(addprefix $(OBJ_PATH)/, $(OBJS))
 $(TARGET): $(ALL_OBJS)
 	$(LINKER) $(LINKER_FLAGS) $(ALL_OBJS) -o $(TARGET)
 

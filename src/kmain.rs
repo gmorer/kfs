@@ -1,6 +1,5 @@
 #![no_std]
 
-#![feature(lang_items)]
 use core::panic::PanicInfo;
 
 mod vga_buffer;
@@ -12,9 +11,6 @@ pub extern "C" fn kmain() -> () {
 }
 
 #[panic_handler]
-fn abort(_info: &PanicInfo) -> ! {
+fn panic_fmt(_info: &PanicInfo) -> ! {
     loop {}
 }
-
-#[lang = "eh_personality"]
-extern fn eh_personality() {}
