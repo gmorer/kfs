@@ -10,13 +10,15 @@ CFLAGS := \
 	--target=i686-unknown-linux-gnu \
 	--crate-type lib 
 
+MKRESCUE := $(shell which grub2-mkrescue 2>&- && echo grub2-mkrescue || echo grub-mkrescue)
+
 OBJS = \
 	loader.o \
 	test.o \
 	module.o
 
-SRC_PATH = src
-OBJ_PATH = obj
+SRC_PATH := src
+OBJ_PATH := obj
 LINKER := ld
 LINKER_CONF := linker.ld
 LINKER_FLAGS := -m elf_i386 --nmagic -T $(LINKER_CONF)
@@ -39,7 +41,7 @@ $(OBJ_PATH)/%.o: $(SRC_PATH)/%.s
 	$(ASM) $(ASM_FLAGS) -o $@ $<
 
 iso: $(TARGET)
-	grub-mkrescue -o os.iso rom
+	$(MKRESCUE) -o os.iso rom
 
 clean:
 	rm -rf $(OBJ_PATH)
